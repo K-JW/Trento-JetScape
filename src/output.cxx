@@ -149,6 +149,11 @@ void HDF5Writer::operator()(
   hdf5_add_scalar_attr(group, "Ny", grid1.shape()[0]);
   hdf5_add_scalar_attr(group, "Nx", grid1.shape()[1]);
   hdf5_add_scalar_attr(group, "Nz", grid1.shape()[2]);
+  // add mass_center_index attrs, Kang Jin-Wen, 2023/03/20 09:55
+  auto ixycm = event.mass_center_index();
+  hdf5_add_scalar_attr(group, "ixcm", ixycm.first);
+  hdf5_add_scalar_attr(group, "iycm", ixycm.second);
+  //
   for (const auto& ecc : event.eccentricity())
     hdf5_add_scalar_attr(group, "e" + std::to_string(ecc.first), ecc.second);
   for (const auto& psi : event.participant_plane())
